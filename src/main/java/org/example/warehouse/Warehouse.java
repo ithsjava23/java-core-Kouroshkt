@@ -1,7 +1,5 @@
 package org.example.warehouse;
 
-import org.example.ProductRecord;
-
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -9,12 +7,14 @@ public class Warehouse {
     private static Warehouse instance;
     private final String name;
     private  final Map<UUID, ProductRecord> productMap;
+    private List<ProductRecord> addedproductss = new ArrayList<>();
     private final List<ProductRecord> changedProducts;
 
     private Warehouse(String name) {
         this.name = name;
         this.productMap = new HashMap<>();
         this.changedProducts = new ArrayList<>();
+        this.addedproductss=new ArrayList<>();
     }
 
     public static Warehouse getInstance() {
@@ -37,6 +37,7 @@ public class Warehouse {
         if (category == null) throw new IllegalArgumentException("Category can't be null.");
         if (price == null) price = BigDecimal.ZERO;
         ProductRecord productRecord = new ProductRecord(id, name, category, price);
+        addedproductss.add(productRecord);
         productMap.put(id, productRecord);
         return productRecord;
     }
@@ -52,7 +53,7 @@ public class Warehouse {
     }
 
     public List<ProductRecord> getProducts() {
-        return Collections.unmodifiableList(new ArrayList<>(productMap.values()));
+        return List.copyOf(addedproductss);
     }
 
     public Optional<ProductRecord> getProductById(UUID id) {

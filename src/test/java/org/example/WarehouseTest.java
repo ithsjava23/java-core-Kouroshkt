@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.warehouse.Category;
+import org.example.warehouse.ProductRecord;
 import org.example.warehouse.Warehouse;
 import org.junit.jupiter.api.*;
 
